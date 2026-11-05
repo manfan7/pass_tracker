@@ -315,6 +315,7 @@ input[type='range'] {
 
 .tab {
   flex: 1;
+  min-width: 0;
   border: none;
   background: transparent;
   border-radius: 9px;
@@ -512,6 +513,7 @@ input[type='range'] {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--line);
@@ -674,6 +676,8 @@ input[type='range'] {
   background: #f8fafc;
   border-radius: 10px;
   min-height: 52px;
+  min-width: 0;
+  overflow: hidden;
   padding: 4px 2px 5px;
   display: flex;
   flex-direction: column;
@@ -837,6 +841,22 @@ input[type='range'] {
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+  /* вкладки: текст над счётчиком, иначе «Просроченные» не даёт колонке сузиться */
+  .tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .tab {
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 2px;
+    font-size: 12px;
+  }
+  .tab-count {
+    min-width: 18px;
   }
   .pass-status {
     text-align: left;
