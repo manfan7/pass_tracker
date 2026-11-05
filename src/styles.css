@@ -1,0 +1,814 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --accent: #4f46e5;
+  --accent-soft: #e0e7ff;
+  --line: #e2e8f0;
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+
+  --ok: #15803d;
+  --ok-bg: #dcfce7;
+  --warn: #b45309;
+  --warn-bg: #fef3c7;
+  --info: #1d4ed8;
+  --info-bg: #dbeafe;
+  --bad: #dc2626;
+  --bad-bg: #fee2e2;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: radial-gradient(1200px 500px at 50% -200px, #e0e7ff 0%, var(--bg) 60%);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+.app {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* ---------- Шапка ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  box-shadow: var(--shadow);
+}
+
+.topbar-text h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.topbar-text p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.topbar {
+  flex-wrap: wrap;
+}
+
+.install-btn {
+  margin-left: auto;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.install-btn:hover {
+  background: var(--accent-soft);
+}
+
+/* ---------- Сетка ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+  .cal-card {
+    position: sticky;
+    top: 16px;
+  }
+}
+
+.col {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ---------- Карточки ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.card-title {
+  margin: 0 0 14px;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Форма ---------- */
+.field {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+input[type='text'],
+input[type='date'] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  color: var(--ink);
+  background: #f8fafc;
+}
+
+input[type='text']:focus,
+input[type='date']:focus,
+input[type='range']:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.type-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.05s;
+}
+
+.type-btn:active {
+  transform: scale(0.97);
+}
+
+.type-emoji {
+  font-size: 22px;
+}
+
+.duration-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.duration-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.quick-row {
+  display: flex;
+  gap: 6px;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.chip.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 28px;
+}
+
+.range-hints {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: -4px;
+}
+
+.preview {
+  background: var(--accent-soft);
+  color: #3730a3;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.form-error {
+  color: var(--bad);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------- Кнопки ---------- */
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s, transform 0.05s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  flex: 1;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  box-shadow: 0 6px 16px -6px rgba(79, 70, 229, 0.5);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.btn-ghost {
+  background: #f1f5f9;
+  color: var(--muted);
+}
+
+/* ---------- Табы ---------- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  padding: 8px 4px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tab.is-active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.tab-count {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  padding: 1px 6px;
+}
+
+/* ---------- Список проездных ---------- */
+.pass-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.pass-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--pc);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.pass-emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.pass-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.pass-name {
+  font-weight: 700;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pass-sub {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 1px;
+}
+
+.pass-dates {
+  font-size: 13px;
+  margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pass-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.b-active {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.b-last {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.b-upcoming {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.b-expired {
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.pass-status {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.pass-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.mini-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px 9px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mini-btn.danger:hover {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+/* ---------- Уведомления ---------- */
+.notif-card {
+  padding: 14px 18px;
+}
+
+.notif-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notif-bell {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.notif-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.notif-main .card-title {
+  margin: 0;
+  font-size: 15px;
+}
+
+.notif-desc {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.switch {
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  border: none;
+  border-radius: 999px;
+  background: #cbd5e1;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.switch.is-on {
+  background: var(--accent);
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+  transition: left 0.15s;
+}
+
+.switch.is-on::after {
+  left: 23px;
+}
+
+/* ---------- Пустые состояния ---------- */
+.empty {
+  text-align: center;
+  padding: 26px 10px;
+  color: var(--muted);
+}
+
+.empty-emoji {
+  font-size: 34px;
+  margin-bottom: 6px;
+}
+
+.empty p {
+  margin: 4px 0;
+}
+
+.empty-sub {
+  font-size: 13px;
+}
+
+.empty-small {
+  padding: 18px 10px;
+  font-size: 14px;
+}
+
+/* ---------- Календарь ---------- */
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cal-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.cal-title .card-title {
+  margin: 0;
+  font-size: 17px;
+}
+
+.link-btn {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-wd {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  padding-bottom: 4px;
+}
+
+.cal-wd.is-weekend {
+  color: #ef4444;
+}
+
+.cal-cell {
+  border: 2px solid transparent;
+  background: #f8fafc;
+  border-radius: 10px;
+  min-height: 52px;
+  padding: 4px 2px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.cal-cell:hover {
+  background: #eef2ff;
+}
+
+.cal-cell.is-empty {
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+.cal-cell.is-weekend .daynum {
+  color: #b91c1c;
+}
+
+.cal-cell.is-past .daynum {
+  color: #94a3b8;
+}
+
+.cal-cell.is-past {
+  background: #f8fafc;
+  opacity: 0.75;
+}
+
+.daynum {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.cal-cell.is-today .daynum {
+  background: var(--accent);
+  color: #fff;
+}
+
+.cal-cell.is-selected {
+  border-color: var(--accent);
+  background: #eef2ff;
+}
+
+.cal-cell.has-end {
+  border-color: var(--pc, var(--accent));
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  min-height: 8px;
+}
+
+.more {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-ring {
+  box-shadow: 0 0 0 1.5px var(--card, #fff), 0 0 0 3px currentColor;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ---------- Детали дня ---------- */
+.day-detail {
+  margin-top: 14px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.day-detail-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.day-detail-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.day-detail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.day-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.day-detail-item b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.day-detail-note {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ---------- Подвал ---------- */
+.footer {
+  margin-top: 26px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .pass-card {
+    flex-wrap: wrap;
+  }
+  .pass-side {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .pass-status {
+    text-align: left;
+  }
+  .cal-cell {
+    min-height: 46px;
+  }
+}
