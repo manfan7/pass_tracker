@@ -9,7 +9,8 @@ import { todayYmd, addDays, formatDate } from './dateUtils';
 
 const ENABLED_KEY = 'pass-tracker:notif:enabled';
 const SENT_KEY = 'pass-tracker:notif:sent'; // { passId: 'YYYY-MM-DD' } — проездной уже оповещён на эту дату окончания
-const FIRE_HOUR = 9; // час, когда приходит запланированное уведомление
+const TIME_KEY = 'pass-tracker:notif:time';
+const DEFAULT_TIME = '09:00';
 const TAG_PREFIX = 'pt-end-';
 
 export function notificationsSupported() {
@@ -42,6 +43,25 @@ export async function requestPermission() {
     return await Notification.requestPermission();
   } catch {
     return 'denied';
+  }
+}
+
+// Время дня, когда приходит запланированное уведомление — "ЧЧ:ММ"
+export function loadFireTime() {
+  try {
+    const v = localStorage.getItem(TIME_KEY);
+    return typeof v === 'string' && /^\d{2}:\d{2}$/.test(v) ? v : DEFAULT_TIME;
+  } catch {
+    return DEFAULT_TIME;
+  }
+}
+
+export function saveFireTime(value) {
+  if (!/^\d{2}:\d{2}$/.test(value)) return;
+  try {
+    localStorage.setItem(TIME_KEY, value);
+  } catch {
+    // хранилище недоступно — время не сохранится
   }
 }
 
@@ -170,8 +190,9 @@ async function cancelOurNotifications(reg) {
 }
 
 function fireTimestamp(end) {
-  const [y, m, d] = addDays(end, -1).split('-').map(Number);
-  return new Date(y, m - 1, d, FIRE_HOUR, 0, 0).getTime();
+  const [h, m] = loadFireTime().split(':').map(Number);
+  const [y, mo, d] = addDays(end, -1).split('-').map(Number);
+  return new Date(y, mo - 1, d, h, m, 0, 0).getTime();
 }
 
 async function rescheduleTriggers(passes, reg) {

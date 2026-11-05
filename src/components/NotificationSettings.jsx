@@ -4,6 +4,8 @@ import {
   permissionState,
   loadEnabled,
   saveEnabled,
+  loadFireTime,
+  saveFireTime,
   requestPermission,
   syncNotifications
 } from '../notifications';
@@ -12,10 +14,12 @@ export default function NotificationSettings({ passes }) {
   const [supported] = useState(notificationsSupported);
   const [perm, setPerm] = useState(permissionState);
   const [enabled, setEnabled] = useState(loadEnabled);
+  const [fireTime, setFireTime] = useState(loadFireTime);
 
   const sync = useCallback(() => {
     syncNotifications(passes, enabled);
-  }, [passes, enabled]);
+    // fireTime в deps: при смене времени расписание перестраивается заново
+  }, [passes, enabled, fireTime]);
 
   useEffect(() => {
     sync();
@@ -53,11 +57,18 @@ export default function NotificationSettings({ passes }) {
     saveEnabled(on);
   }
 
+  function handleTimeChange(e) {
+    const value = e.target.value;
+    if (!value) return;
+    setFireTime(value);
+    saveFireTime(value);
+  }
+
   let desc;
   if (denied) {
     desc = 'Уведомления запрещены в настройках. Разрешите их для «Проездных» в настройках сайта или приложения, затем обновите страницу.';
   } else if (active) {
-    desc = 'Напомним за 1 день до окончания срока. На Android напоминание придёт в 9:00, даже если приложение закрыто.';
+    desc = `Напомним за 1 день до окончания срока. На Android напоминание придёт в ${fireTime}, даже если приложение закрыто.`;
   } else {
     desc = 'Предупредим за 1 день до окончания срока проездного.';
   }
@@ -83,6 +94,12 @@ export default function NotificationSettings({ passes }) {
           />
         )}
       </div>
+      {active && (
+        <div className="notif-time">
+          <label htmlFor="notif-time">Время напоминания</label>
+          <input id="notif-time" type="time" value={fireTime} onChange={handleTimeChange} />
+        </div>
+      )}
     </section>
   );
 }

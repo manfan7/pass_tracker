@@ -507,6 +507,39 @@ input[type='range'] {
   font-size: 13px;
 }
 
+.notif-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.notif-time label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.notif-time input {
+  width: 130px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: #f8fafc;
+  text-align: center;
+}
+
+.notif-time input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .switch {
   flex-shrink: 0;
   width: 46px;
